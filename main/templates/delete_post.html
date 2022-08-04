@@ -1,0 +1,28 @@
+{% extends 'index.html' %}
+{% block title %}Delete Post{% endblock %}
+
+{% block content %}
+    <!-- Delete blog post-->
+    {% if user.is_authenticated %}
+        <!-- Ensure a user cannot edit or delete other user's post -->
+        {% if user.id == post.author.id %}
+        <div class=" card form-group mt-3 mb-3">
+            <legend class="card-header text-bg-warning">Delete: {{ post.title }}</legend>
+            <form class="text-center" action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h1 class="mt-4 mb-4"><strong>Are you sure?</strong></h1>
+                <input class="btn btn-outline-danger ns-4" style="width: 45%;" type="submit" value="Yes">
+                <a class="btn btn-outline-info" style="width: 45%;" href="{% url 'home' %}">No</a>
+            </form>
+        </div>
+        {% else %}
+        <div class="container d-flex justify-content-center text-center align-items-center text-bg-danger mt-4" style="height: 30vh;">
+            <h1>You are not allowed here!</h1>
+        </div>
+        {% endif %}
+    {% else %}
+        <div class="container d-flex justify-content-center text-center align-items-center text-bg-danger mt-4" style="height: 30vh;">
+            <h1>You are not allowed here!</h1>
+        </div>
+    {% endif %}
+{% endblock %}

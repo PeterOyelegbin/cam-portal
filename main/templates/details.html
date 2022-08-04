@@ -1,0 +1,24 @@
+{% extends 'index.html' %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+    <!-- Full blog post-->
+    <div class="card mt-4" style="max-width: 40rem;">
+        <img class="card-img-top" style="height: 20rem;" src="{{ post.image.url }}" alt="{{ post.image }}" />
+        <div class="card-body">
+            <h2 class="card-title h4">{{ post.title }}</h2>
+            <div class="small text-muted">
+                {{ post.author.first_name }} {{ post.author.last_name }} | {{ post.created_on }}
+                <!-- Ensure a user is logged in before update or delete a post -->
+                {% if user.is_authenticated %}
+                    <!-- Ensure a user cannot edit or delete other user's post -->
+                    {% if user.id == post.author.id %}
+                    <a class="btn btn-primary" href="{% url 'update_post' post.pk %}">Edit</a>
+                    <a class="btn btn-danger" href="{% url 'delete_post' post.pk %}">Delete</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <p class="card-text">{{ post.content | safe }}</p>
+        </div>
+    </div>
+{% endblock %}
