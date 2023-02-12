@@ -8,6 +8,7 @@
         {% if user.id == post.author.id %}
         <div class=" card form-group mt-3 mb-3">
             <legend class="card-header text-bg-secondary">Update Post</legend>
+            {% load cloudinary %}
             <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.media }}

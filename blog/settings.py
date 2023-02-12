@@ -9,8 +9,9 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-import os
+
 from pathlib import Path
+import cloudinary_storage
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,8 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main',
+
+    # 3rd party libraries
     'ckeditor',
+    'cloudinary',
+    'cloudinary_storage',
+
+    # created app
+    'main.apps.MainConfig',
 ]
 
 MIDDLEWARE = [
@@ -49,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware"
 ]
 
 ROOT_URLCONF = 'blog.urls'
@@ -77,27 +85,31 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'sql4467590',
+#         'USER': 'sql4467590',
+#         'PASSWORD': 'qZuhzK6NsR',
+#         'HOST': 'sql4.freemysqlhosting.net',
+#         'PORT': 3306,
 #     }
 # }
 
-
-# MySql Database
-
-import pymysql
-pymysql.install_as_MySQLdb()
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sql4467590',
-        'USER': 'sql4467590',
-        'PASSWORD': 'qZuhzK6NsR',
-        'HOST': 'sql4.freemysqlhosting.net',
-        'PORT': 3306,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-}
 
+    # # Remote database
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'railway',
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'rzJx2mTjeEG7iP5eWind',
+    #     'HOST': 'containers-us-west-147.railway.app',
+    #     'PORT': '7955',
+    # }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -135,11 +147,24 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-MEDIA_URL = ''
+STATIC_ROOT = BASE_DIR/"staticfiles"
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'main/static/')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Cloudinary cconfiguration
+CLOUDINARY_STORAGE = { 
+  'CLOUD_NAME': 'chosen1', 
+  'API_KEY': '259953999733973', 
+  'API_SECRET': 'BIhcZhZbpIz8zYAYuidnLTRAZoo' 
+}
+
+
+# Default file storage configuration
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

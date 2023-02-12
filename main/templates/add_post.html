@@ -6,6 +6,7 @@
     {% if user.is_authenticated %}
     <div class=" card form-group mt-3 mb-3">
         <legend class="card-header text-bg-success">Create Post</legend>
+        {% load cloudinary %}
         <form action="" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.media }}
@@ -14,9 +15,9 @@
         </form>
     </div>
 
-    <!-- Automatically generate the autors name based on logged in -->
+    <!-- Automatically generate the authors name based on logged in -->
     <script>
-        var name = "{{ user.first_name }} {{ user.last_name }}";
+        var name = "{{ user.id }}";
         document.getElementById("author").value = name;
     </script>
     {% else %}
