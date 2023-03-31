@@ -11,7 +11,15 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 import cloudinary_storage
+import pymysql
+
+
+load_dotenv()
+
+pymysql.install_as_MySQLdb()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +29,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ws0wqhetbypx%loyj!)%9@#20px&vy7+*z2@&%1u=v2it$irp)'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = ["django-fs-blog.up.railway.app"]
+ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
 
 
 # Application definition
@@ -56,7 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware"
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'blog.urls'
@@ -83,32 +91,24 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'sql4467590',
-#         'USER': 'sql4467590',
-#         'PASSWORD': 'qZuhzK6NsR',
-#         'HOST': 'sql4.freemysqlhosting.net',
-#         'PORT': 3306,
-#     }
-# }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-
-    # # Remote database
     # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql',
-    #     'NAME': 'railway',
-    #     'USER': 'postgres',
-    #     'PASSWORD': 'rzJx2mTjeEG7iP5eWind',
-    #     'HOST': 'containers-us-west-147.railway.app',
-    #     'PORT': '7955',
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
     # }
+
+    # Remote database
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASS'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
+        "OPTIONS": {
+            "ssl_ca": BASE_DIR / "cacert.pem"
+        },
+    }
 }
 
 # Password validation
@@ -158,11 +158,11 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# Cloudinary cconfiguration
+# Cloudinary configuration
 CLOUDINARY_STORAGE = { 
-  'CLOUD_NAME': 'chosen1', 
-  'API_KEY': '259953999733973', 
-  'API_SECRET': 'BIhcZhZbpIz8zYAYuidnLTRAZoo' 
+  'CLOUD_NAME': os.environ.get('CLOUD_NAME'), 
+  'API_KEY': os.environ.get('API_KEY'), 
+  'API_SECRET': os.environ.get('API_SECRET') 
 }
 
 

@@ -4,12 +4,12 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('about/', views.About.as_view(), name='about'),
-    path('signup/', views.registerPage, name='signup'),
-    path('login/', views.loginPage, name='login'),
-    path('logout/', views.logoutUser, name='logout'),
-    path('add_post/', views.AddPost.as_view(), name='add_post'),
-    path('<str:pk>/', views.PostDetail.as_view(), name='details'),
-    path('edit/<str:pk>/', views.UpdatePost.as_view(), name='update_post'),
-    path('delete/<str:pk>/', views.DeletePost.as_view(), name='delete_post'),
+    path('about', views.About.as_view(), name='about'),
+    path('signup', views.registerPage, name='signup'),
+    path('login', views.loginPage, name='login'),
+    path('logout', views.logoutUser, name='logout'),
+    path('add_post', views.AddPost.as_view(), name='add_post'),
+    path('<str:pk>', views.PostDetail.as_view(), name='details'),
+    path('edit/<str:pk>', views.UpdatePost.as_view(), name='update_post'),
+    path('delete/<str:pk>', views.DeletePost.as_view(), name='delete_post'),
 ]

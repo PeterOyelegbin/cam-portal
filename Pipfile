@@ -4,13 +4,13 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+python-dotenv = "*"
 django = "*"
-pillow = "*"
 django-ckeditor = "*"
+pillow = "*"
 cloudinary = "*"
 django-cloudinary-storage = "*"
-psycopg2 = "*"
-gunicorn = "*"
+PyMySQL = "*"
 whitenoise = "*"
 
 [dev-packages]
