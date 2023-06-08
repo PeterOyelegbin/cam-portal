@@ -45,8 +45,8 @@ INSTALLED_APPS = [
     # "cloudinary_storage",
 
     # created apps
-    # "accounts.apps.AccountsConfig",
-    # "loans.apps.LoansConfig"
+    "accounts.apps.AccountsConfig",
+    "loans.apps.LoansConfig"
 ]
 
 
@@ -58,6 +58,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware"
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -90,21 +91,21 @@ DATABASES = {
     #     "NAME": BASE_DIR / "db.sqlite3",
     # }
 
-    # # Remote test database
-    # 'default': {
-    #     'ENGINE': 'djongo',
-    #     'NAME': config('DB_NAME'),
-    #     'ENFORCE_SCHEMA': False,
-    #     'CLIENT': {
-    #         'host': config('DB_URL')
-    #     }
-    # }
+    # Remote test database
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': config('DB_NAME'),
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': config('DB_URL')
+        }
+    }
 }
 
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
-# AUTH_USER_MODEL = "accounts.UserModel"
+AUTH_USER_MODEL = "accounts.UserModel"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -145,6 +146,8 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -152,15 +155,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-# Cloudinary configuration
-CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": config("CLOUD_NAME"),
-    "API_KEY": config("API_KEY"),
-    "API_SECRET": config("API_SECRET"),
-}
+# # Cloudinary configuration
+# CLOUDINARY_STORAGE = {
+#     "CLOUD_NAME": config("CLOUD_NAME"),
+#     "API_KEY": config("API_KEY"),
+#     "API_SECRET": config("API_SECRET"),
+# }
 
-# Default file storage configuration
-DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+# # Default file storage configuration
+# DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 
 # Email settings
