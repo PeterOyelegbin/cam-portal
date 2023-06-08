@@ -45,8 +45,8 @@ INSTALLED_APPS = [
     # "cloudinary_storage",
 
     # created apps
-    "accounts.apps.AccountsConfig",
-    "loans.apps.LoansConfig"
+    # "accounts.apps.AccountsConfig",
+    # "loans.apps.LoansConfig"
 ]
 
 
@@ -104,7 +104,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
-AUTH_USER_MODEL = "accounts.UserModel"
+# AUTH_USER_MODEL = "accounts.UserModel"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
