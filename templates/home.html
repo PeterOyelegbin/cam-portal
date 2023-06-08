@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'navbar.html' %}
+<div class="container-fluid d-flex flex-row justify-content-center align-items-center mt-2" style="min-height: 65vh;">
+    <div class="container-fluid row mb-2" style="min-height: 65vh;">
+        <!-- Sidebar Menu-->
+        <aside id="dashboard" class="col-md-2 bg-primary text-white d-none">
+            <h2 class="mt-3">Dashboard</h2>
+            <hr>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}">Applicants</a>
+                </li>
+                {% if user.group != 'CSO' %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'applicationForm' %}">Application Form</a>
+                </li>
+                {% endif %}
+                {% if user.group != 'IT' %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'users' %}">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'createUser' %}">Add User</a>
+                </li>
+                {% endif %}
+            </ul>
+        </aside>
+        
+        <!-- Sidebar Content -->
+        <article class="">
+            {% block article %}
+            <!-- applicant list -->
+            <section class="applicants">
+                <h2>Applicant List</h2>
+                <table class="table table-bordered table-hover">
+                    <thead class="table-primary">
+                        <tr>
+                            <th>Account Name</th>
+                            <th>Amount (#)</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for applicant in applicants %}
+                        <tr>
+                            <td>{{ applicant.applicant_name }}</td>
+                            <td>{{ applicant.amount }}</td>
+                            <td>{{ applicant.status }}</td>
+                            <td>
+                                <a class="nav-link material-symbols-outlined text-info" href="{% url 'applicationDetails' applicant.pk %}">visibility</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+            <!-- end of applicant list -->
+            {% endblock %}
+        </article>
+    </div>
+</div>
+{% endblock %}

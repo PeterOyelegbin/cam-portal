@@ -1,0 +1,97 @@
+{% extends 'home.html' %}
+{% block article %}
+<section>
+    <h2>Applicant Details</h2>
+    <table class="table table-bordered table-hover table-striped">
+        <tbody>
+            <tr>
+                <td>Account Name</td>
+                <td>{{ applicant.applicant_name }}</td>
+            </tr>
+            <tr>
+                <td>Account No</td>
+                <td>{{ applicant.applicant_account }}</td>
+            </tr>
+            <tr>
+                <td>Amount</td>
+                <td>#{{ applicant.amount }}</td>
+            </tr>
+            <tr>
+                <td>Duration</td>
+                <td>{{ applicant.duration }}</td>
+            </tr>
+            <tr>
+                <td>Account Officer</td>
+                <td>{{ applicant.account_officer }}</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>{{ applicant.status }}</td>
+            </tr>
+            <tr>
+                <td>Comment</td>
+                <td>{{ applicant.comment }}</td>
+            </tr>
+            <tr>
+                <td>Date Applied</td>
+                <td>{{ applicant.date_applied }}</td>
+            </tr>
+            <tr>
+                <td>Action</td>
+                <td>
+                <!-- Ensure CSO and Account Officer can not review loan application -->
+                {% if user.role != 'CSO' %}
+                    <!-- Ensure users can only make review if status is pending -->
+                    {% if applicant.status == 'Pending' %}
+                    <a class="nav-link material-symbols-outlined text-success me-3" href="{% url 'applicationReview' applicant.pk %}">insert_comment</a>
+                    {% endif %}
+                {% endif %}
+
+                <!-- Ensure only CSO and IT can edit or delete loan application -->
+                {% if user.role == 'CSO' or user.role == 'IT' %}
+                    <a class="nav-link material-symbols-outlined text-primary me-3" href="{% url 'applicationUpdate' applicant.pk %}">edit</a>
+                    <a class="nav-link material-symbols-outlined text-danger" type="button" data-bs-toggle="modal" data-bs-target="#myModal">delete</a>
+                    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-danger">
+                                    <h5 class="modal-title" id="myModalLabel">Delete Applicant</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>WARNING: Are you sure you want to delete this applicant?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-danger" href="{% url 'applicationDelete' applicant.pk %}">Yes</a>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="mt-3">Reviews</h2>
+    <table class="table table-bordered table-hover">
+        <thead class="table-primary text-white">
+            <tr>
+                <th>Official</th>
+                <th>Status</th>
+                <th>Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for comment in applicant.approvals.all %}
+            <tr>
+                <td>{{ comment.official }}</td>
+                <td>{{ comment.status }}</td>
+                <td>{{ comment.comment }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

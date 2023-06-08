@@ -1,0 +1,15 @@
+#auth {
+    /* background-color: blueviolet; */
+    background-image: url("https://wallpapercave.com/wp/wp9764093.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.nav-link {
+    color: white;
+}
+
+.applicants, .listUsers {
+    max-height: 100vh;
+    overflow-y: auto;
+}

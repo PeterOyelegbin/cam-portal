@@ -1,0 +1,24 @@
+{% extends 'home.html' %}
+{% block article %}
+<!-- review form -->
+<section>
+    <h2>Review Form</h2>
+    <form action="{% url 'applicationReview' data.id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        {% for form in formset %}
+            {{ form.label_tag }} {{ form }}
+        {% endfor %}
+        <button type="submit" class="btn btn-success mb-3">Submit Review</button>
+    </form>
+
+    <!-- Automatically fill the reviewer and applicant field with generated id respectively -->
+    <script>
+        var official_name = "{{ user.id }}";
+        var applicant_name = "{{ data.id }}";
+        document.getElementById("official").value = official_name;
+        document.getElementById("applicant").value = applicant_name;
+    </script>
+</section>
+<!-- end of application form -->
+{% endblock %}

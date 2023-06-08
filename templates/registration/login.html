@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="h-100 gradient-form">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="text-center mb-3">
+                <h1>Credit Approval Memorandum</h1>
+            </div>
+            
+            <div class="col-xl-10">
+                <div class="card rounded-3 text-black">
+                    <div class="row g-0">
+                        <div class="col-lg-6">
+                            {% block authentication %}
+                            <div class="card-body p-md-5 mx-md-4">
+                                <div class="text-center">
+                                    <img src="https://alertmfb.com.ng/images/logo-dark.png"
+                                    style="width: 185px;" alt="logo">
+                                    <h4 class="mt-3 mb-3 pb-1">Welcome back!</h4>
+                                </div>
+                                <hr>
+
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <p>Please login to your account</p>
+                
+                                    <div class="form-outline mb-3">
+                                    <input type="email" id="email_field" name="email" class="form-control" placeholder="Enter email address" required/>
+                                    <label class="form-label" for="email_field">Email</label>
+                                    </div>
+                
+                                    <div class="form-outline mb-3">
+                                    <input type="password" id="password_field" name="password" class="form-control" required/>
+                                    <label class="form-label" for="password_field">Password</label>
+                                    </div>
+                
+                                    <div class="text-center pt-1 mb-2 pb-1">
+                                    <input class="btn btn-info btn-block fa-lg" type="submit" value="Login" />
+                                    </div>
+                                </form>
+                                <div class="text-center">
+                                    <a href="{% url 'password_reset' %}">Forget Password</a>
+                                </div>
+                            </div>
+                            {% endblock %}
+                        </div>
+                        <div id="auth" class="col-lg-6 d-flex align-items-center">
+                            <div class="text-white px-3 py-4 p-md-5 mx-md-4">
+                            <h2>CAM Portal</h2>
+                            <h4 class="mb-4">We are more than just a company</h4>
+                            <p class="small mb-0"> Credit Approval Memorandum serves as a critical document for internal record-keeping, 
+                                decision-making, and communication between various stakeholders involved in the credit approval process. 
+                                It provides a comprehensive overview of the borrower's creditworthiness, associated risks, and the lender's 
+                                evaluation and decision-making process.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

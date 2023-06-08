@@ -1,0 +1,28 @@
+{% extends 'home.html' %}
+{% block article %}
+<!-- application form -->
+<section>
+    {% if user.role == 'CSO' %}
+    <h2>Loan Application Form</h2>
+    <form action="{% url 'applicationForm' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        <div class="row">
+            {% for form in formset %}
+            <div class="col-md-3">
+                <div class="form-group mb-3">
+                    {{ form.label_tag }} {{ form }}
+                </div>
+            </div>
+            {% endfor %}
+        </div>  
+        <button type="submit" class="btn btn-success mt-3">Apply</button>
+    </form>
+    {% else %}
+    <div class="fluid-container row align-items-center" style="height: 50vh;">
+        <h2 class="text-center">You are not authorized to access this page!</h2>
+    </div>
+    {% endif %}
+</section>
+<!-- end of application form -->
+{% endblock %}
