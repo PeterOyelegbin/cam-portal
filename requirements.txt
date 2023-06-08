@@ -1,5 +1,5 @@
-python-decouple==3.8
 Django==4.1.8
+python-decouple==3.8
 Pillow==9.5.0
 cloudinary==1.32.0
 django-cloudinary-storage==0.3.0
