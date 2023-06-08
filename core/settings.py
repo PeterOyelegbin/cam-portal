@@ -58,7 +58,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware"
 ]
 
 ROOT_URLCONF = "core.urls"
@@ -91,15 +90,15 @@ DATABASES = {
     #     "NAME": BASE_DIR / "db.sqlite3",
     # }
 
-    # Remote test database
-    'default': {
-        'ENGINE': 'djongo',
-        'NAME': config('DB_NAME'),
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': config('DB_URL')
-        }
-    }
+    # # Remote test database
+    # 'default': {
+    #     'ENGINE': 'djongo',
+    #     'NAME': config('DB_NAME'),
+    #     'ENFORCE_SCHEMA': False,
+    #     'CLIENT': {
+    #         'host': config('DB_URL')
+    #     }
+    # }
 }
 
 
@@ -145,8 +144,6 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Default primary key field type
