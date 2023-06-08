@@ -8,14 +8,14 @@ from .forms import ApplicationForm, ApplicationUpdateForm, ReviewForm
 
 
 # Create your views here.
-@login_required(login_url='http://127.0.0.1:8000/accounts/login') 
+@login_required(login_url='http://cam-portal.vercel.app/accounts/login') 
 def applicationList(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     applicants = LoanApplication.objects.filter(applicant_name__icontains=q).order_by('-date_applied')
     return render(request, 'home.html', {'applicants': applicants})
 
 
-@login_required(login_url='http://127.0.0.1:8000/accounts/login')
+@login_required(login_url='http://cam-portal.vercel.app/accounts/login')
 def applicationForm(request):
     formset = ApplicationForm(request.POST or None)
     if formset.is_valid():
@@ -35,13 +35,13 @@ def applicationForm(request):
         return render(request, 'application_form.html', {'formset': formset})
 
 
-@login_required(login_url='http://127.0.0.1:8000/accounts/login')
+@login_required(login_url='http://cam-portal.vercel.app/accounts/login')
 def applicationDetails(request, pk):
     applicant = get_object_or_404(LoanApplication, id=pk)
     return render(request, 'application_details.html', {'applicant': applicant})
 
 
-@login_required(login_url='http://127.0.0.1:8000/accounts/login')
+@login_required(login_url='http://cam-portal.vercel.app/accounts/login')
 def applicationUpdate(request, pk):
     object = get_object_or_404(LoanApplication, id=pk)
     formset = ApplicationUpdateForm(request.POST or None, instance=object)
@@ -53,14 +53,14 @@ def applicationUpdate(request, pk):
         return render(request, 'application_update.html', {'formset': formset})
 
 
-@login_required(login_url='http://127.0.0.1:8000/accounts/login')
+@login_required(login_url='http://cam-portal.vercel.app/accounts/login')
 def applicationDelete(request, pk):
     object = get_object_or_404(LoanApplication, id=pk)
     object.delete()
     return redirect('home')
 
 
-@login_required(login_url='http://127.0.0.1:8000/accounts/login')
+@login_required(login_url='http://cam-portal.vercel.app/accounts/login')
 def applicationReview(request, pk):
     object = get_object_or_404(LoanApplication, id=pk)
     formset = ReviewForm(request.POST or None)
