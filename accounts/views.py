@@ -9,26 +9,26 @@ from .forms import UserCreationForm, UserUpdateForm
 
 
 # Create your views here.
-@login_required(login_url='http://cam-portal.vercel.app/accounts/login')
+@login_required(login_url='https://cam-portal.vercel.app/accounts/login')
 def listUsers(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     users = UserModel.objects.filter(first_name__icontains=q)
     return render(request, 'registration/listUsers.html', {'staffs': users})
 
 
-@login_required(login_url='http://cam-portal.vercel.app/accounts/login')
+@login_required(login_url='https://cam-portal.vercel.app/accounts/login')
 def userDetails(request, pk):
     user = UserModel.objects.get(id=pk)
     return render(request, 'registration/userDetails.html', {'staff': user})
 
 
-@login_required(login_url='http://cam-portal.vercel.app/accounts/login')
+@login_required(login_url='https://cam-portal.vercel.app/accounts/login')
 def createUser(request):
     formset = UserCreationForm(request.POST or None)
     if formset.is_valid():
         send_mail(
-            subject='LAPS: User Created',
-            message= f"Dear {formset.data['first_name']} {formset.data['last_name']},\n\nCongratulations! You have successfully been created on the LAPS platform in the ALERT MICROFINANCE BANK LTD Institution, a default password was created for you and can be change to a preferred one by clicking forget password. Please log in with the following default credentials below:\nemail: {formset.data['email']}\npassword: {formset.data['password']}\n\nRegards,\nLAPS Team\n{settings.EMAIL_HOST_USER}\nhttps://laps.vercel.app",
+            subject='CAM Portal: User Created',
+            message= f"Dear {formset.data['first_name']} {formset.data['last_name']},\n\nCongratulations! You have successfully been created on the CAM portal of the ALERT MICROFINANCE BANK LTD Institution, a default password was created for you and can be change to a preferred one by clicking forget password. Please log in with the following default credentials below:\nemail: {formset.data['email']}\npassword: {formset.data['password']}\n\nRegards,\nCAM Portal\n{settings.EMAIL_HOST_USER}\nhttps://cam-portal.vercel.app",
             from_email=settings.EMAIL_HOST_USER,
             recipient_list=[formset.data['email']]
         )
@@ -39,7 +39,7 @@ def createUser(request):
         return render(request, 'registration/createUser.html', {'formset': formset})
 
 
-@login_required(login_url='http://cam-portal.vercel.app/accounts/login')
+@login_required(login_url='https://cam-portal.vercel.app/accounts/login')
 def updateUser(request, pk):
     object = get_object_or_404(UserModel, id=pk)
     formset = UserUpdateForm(request.POST or None, instance=object)
@@ -51,7 +51,7 @@ def updateUser(request, pk):
         return render(request, 'registration/updateUser.html', {'formset': formset})
 
 
-@login_required(login_url='http://cam-portal.vercel.app/accounts/login')
+@login_required(login_url='https://cam-portal.vercel.app/accounts/login')
 def deleteUser(request, pk):
     user = UserModel.objects.get(id=pk)
     user.delete()
@@ -75,7 +75,7 @@ def loginUser(request):
     return render(request, 'registration/login.html')
 
 
-@login_required(login_url='http://cam-portal.vercel.app/accounts/login')
+@login_required(login_url='https://cam-portal.vercel.app/accounts/login')
 def logoutUser(request):
     logout(request)
     return redirect('home')
