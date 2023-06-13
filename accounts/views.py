@@ -9,20 +9,20 @@ from .forms import UserCreationForm, UserUpdateForm
 
 
 # Create your views here.
-@login_required(login_url='https://cam-portal.vercel.app/accounts/login')
+@login_required(redirect_field_name="login")
 def listUsers(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
     users = UserModel.objects.filter(first_name__icontains=q)
     return render(request, 'registration/listUsers.html', {'staffs': users})
 
 
-@login_required(login_url='https://cam-portal.vercel.app/accounts/login')
+@login_required(redirect_field_name="login")
 def userDetails(request, pk):
     user = UserModel.objects.get(id=pk)
     return render(request, 'registration/userDetails.html', {'staff': user})
 
 
-@login_required(login_url='https://cam-portal.vercel.app/accounts/login')
+@login_required(redirect_field_name="login")
 def createUser(request):
     formset = UserCreationForm(request.POST or None)
     if formset.is_valid():
@@ -39,7 +39,7 @@ def createUser(request):
         return render(request, 'registration/createUser.html', {'formset': formset})
 
 
-@login_required(login_url='https://cam-portal.vercel.app/accounts/login')
+@login_required(redirect_field_name="login")
 def updateUser(request, pk):
     object = get_object_or_404(UserModel, id=pk)
     formset = UserUpdateForm(request.POST or None, instance=object)
@@ -51,7 +51,7 @@ def updateUser(request, pk):
         return render(request, 'registration/updateUser.html', {'formset': formset})
 
 
-@login_required(login_url='https://cam-portal.vercel.app/accounts/login')
+@login_required(redirect_field_name="login")
 def deleteUser(request, pk):
     user = UserModel.objects.get(id=pk)
     user.delete()
@@ -75,7 +75,7 @@ def loginUser(request):
     return render(request, 'registration/login.html')
 
 
-@login_required(login_url='https://cam-portal.vercel.app/accounts/login')
+@login_required(redirect_field_name="login")
 def logoutUser(request):
     logout(request)
     return redirect('home')

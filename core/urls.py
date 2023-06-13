@@ -25,7 +25,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     
     # User authentication routes
-    path('accounts/login', loginUser, name='login'),
+    path('accounts/login/', loginUser, name='login'),
     path('accounts/logout', logoutUser, name='logout'),
     path('accounts/users', listUsers, name='users'),
     path('accounts/create', createUser, name='createUser'),
